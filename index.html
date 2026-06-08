@@ -1,514 +1,552 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Online Marketing System</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zanzibar Online Marketing | Shop</title>
 
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 
-<style>
-body{
-    background: white;
-}
+    <style>
+        body { background: #f4f4f4; }
+        
+        .hero {
+            background: linear-gradient(rgba(0,0,0,.6), rgba(0,0,0,.6)),
+            url('https://images.unsplash.com/photo-1542838132-92c53300491e');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            padding: 40px 0;
+            text-align: center;
+            margin-bottom: 20px;
+            height: 300px;
+        }
 
-.hero{
-    background:linear-gradient(rgba(0,0,0,.7),rgba(0,0,0,.7)),
-    url('https://images.unsplash.com/photo-1542838132-92c53300491e');
-    background-size:cover;
-    background-position:center;
-    color:white;
-    padding:80px 0;
-    text-align:center;
-}
+        .sidebar-card {
+            border: none;
+            border-radius: 10px;
+            overflow: hidden;
+        }
 
-.store-card{
-    transition:.3s;
-    cursor:pointer;
-}
+        .product-card {
+            transition: .3s;
+            border: none;
+            border-radius: 8px;
+            overflow: hidden;
+            background: #fff;
+            cursor: pointer;
+        }
 
-.store-card:hover{
-    transform:translateY(-8px);
-}
+        .product-card:hover {
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            transform: translateY(-3px);
+        }
 
-.store-img{
-    height:220px;
-    object-fit:cover;
-}
+        .product-img {
+            height: 150px; 
+            object-fit: cover;
+            width: 100%;
+        }
 
-.product-card img{
-    height:180px;
-    object-fit:cover;
-}
+        /* Detail Page Styling */
+        .detail-main-img {
+            width: 100%;
+            max-height: 500px;
+            object-fit: cover;
+            border-radius: 8px;
+            background: #fff;
+        }
 
-#productsSection{
-    display:none;
-}
-</style>
+        .detail-thumb-img {
+            width: 100%;
+            height: 70px;
+            object-fit: cover;
+            border-radius: 5px;
+            cursor: pointer;
+            border: 2px solid transparent;
+            transition: 0.2s;
+        }
+
+        .detail-thumb-img:hover, .detail-thumb-img.active {
+            border-color: #ffc107;
+        }
+
+        .price-tag {
+            color: #ff4400;
+            font-size: 2rem;
+            font-weight: bold;
+        }
+
+        .size-badge, .color-badge {
+            cursor: pointer;
+            border: 1px solid #ccc;
+            padding: 6px 15px;
+            border-radius: 4px;
+            display: inline-block;
+            margin-right: 5px;
+            margin-bottom: 5px;
+            background: #fff;
+            font-size: 0.9rem;
+            transition: 0.2s;
+        }
+
+        .size-badge:hover, .color-badge:hover, .size-badge.active, .color-badge.active {
+            border-color: #ff4400;
+            color: #ff4400;
+            background: #fff5f2;
+        }
+
+        .category-btn {
+            text-align: left;
+            border-radius: 0;
+            border: none;
+            border-bottom: 1px solid #eee;
+            padding: 12px 15px;
+            font-size: 0.95rem;
+        }
+
+        .category-btn.active {
+            background-color: #ffc107 !important;
+            color: #000 !important;
+            font-weight: bold;
+        }
+    </style>
 </head>
 <body>
 
-
- <!-- NAVBAR -->
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
     <div class="container">
-        <a class="navbar-brand fw-bold" href="#">
-             Online Marketing
-        </a>
-
-        <button class="navbar-toggler"
-                data-bs-toggle="collapse"
-                data-bs-target="#menu">
+        <a class="navbar-brand fw-bold" href="#" onclick="filterProducts('all')">ZANZIBAR MARKET</a>
+        <button class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#menu">
             <span class="navbar-toggler-icon"></span>
         </button>
-
         <div class="collapse navbar-collapse" id="menu">
-
-            <ul class="navbar-nav me-auto">
-
-                <li class="nav-item">
-                    <a class="nav-link active" href="index.html">
-                        Home
-                    </a>
-                </li>
-
-                <li class="nav-item">
-                    <a class="nav-link" href="signup.html">
-                        Register
-                    </a>
-                </li>
-
-                <li class="nav-item">
-                    <a class="nav-link" href="login.html">
-                        Login
-                    </a>
-                </li>
-
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item"><a class="nav-link active" href="#" onclick="filterProducts('all')">Home</a></li>
+                <li class="nav-item"><a class="nav-link" href="signup.html">Register</a></li>
+                <li class="nav-item"><a class="nav-link" href="login.html">Login</a></li>
             </ul>
-
-           
-
         </div>
     </div>
 </nav>
-<div class="hero">
-    <h1>ZANZIBAR ONLINE MARKETING SYSTEM</h1>
-    <p>Find the best products from trusted stores</p>
+
+<div class="hero" id="heroSection">
+    <h2 class="fw-bold">ZANZIBAR ONLINE MARKETING SYSTEM</h2>
+    <p>Discover Quality Products at Best Prices</p>
 </div>
 
-<div class="container mt-5">
+<div class="container-fluid px-4">
+    
+    <div class="row" id="mainShopSection">
 
-    <h2 class="text-center mb-4">Available Stores</h2>
-
-    <div class="row">
-
-        <!-- STORE 1 -->
-        <div class="col-md-4 mb-4">
-            <div class="card store-card">
-                <img src="https://images.unsplash.com/photo-1512436991641-6745cdb1723f"
-                     class="card-img-top store-img">
-
-                <div class="card-body">
-                    <h5>Fashion Hub</h5>
-
-                    <p>
-                        Modern clothing store offering quality fashion
-                        products for men and women.
-                    </p>
-
-                    <p>
-                        <strong>Mmiliki:</strong> Juma Mussa
-                    </p>
-
-                    <button class="btn btn-primary w-100"
-                    onclick="showProducts('fashion')">
-                    View Products
+        <div class="col-md-3 mb-4" id="sidebarContainer">
+            <div class="card sidebar-card shadow-sm">
+                <div class="card-header bg-warning fw-bold text-center py-3">
+                    <h5><i class="bi bi-list-task me-2"></i>CATEGORIES</h5>
+                </div>
+                <div class="list-group list-group-flush" id="categoryList">
+                    <button id="btn-all" class="list-group-item list-group-item-action category-btn active" onclick="filterProducts('all')">
+                        <i class="bi bi-grid-fill me-2 text-warning"></i> All Categories
+                    </button>
+                    <button id="btn-viatu" class="list-group-item list-group-item-action category-btn" onclick="filterProducts('viatu')">
+                        <i class="bi bi-archive-fill me-2 text-primary"></i> Viatu
+                    </button>
+                    <button id="btn-saa" class="list-group-item list-group-item-action category-btn" onclick="filterProducts('saa')">
+                        <i class="bi bi-clock-fill me-2 text-danger"></i> Saa za Mkononi
+                    </button>
+                    <button id="btn-mkoba" class="list-group-item list-group-item-action category-btn" onclick="filterProducts('mkoba')">
+                        <i class="bi bi-bag-fill me-2 text-success"></i> Mikoba
+                    </button>
+                    <button id="btn-suti" class="list-group-item list-group-item-action category-btn" onclick="filterProducts('suti')">
+                        <i class="bi bi-gender-male me-2 text-info"></i> Suti Bomba
+                    </button>
+                    <button id="btn-shati" class="list-group-item list-group-item-action category-btn" onclick="filterProducts('shati')">
+                        <i class="bi bi-patch-check me-2 text-secondary"></i> Shati & T-Shirts
+                    </button>
+                    <button id="btn-suruali" class="list-group-item list-group-item-action category-btn" onclick="filterProducts('suruali')">
+                        <i class="bi bi-scissors me-2 text-dark"></i> Suruali
+                    </button>
+                    <button id="btn-nguo" class="list-group-item list-group-item-action category-btn" onclick="filterProducts('nguo')">
+                        <i class="bi bi-heart-fill me-2 text-danger"></i> Nguo za Watoto
+                    </button>
+                    <button id="btn-market" class="list-group-item list-group-item-action category-btn" onclick="filterProducts('market')">
+                        <i class="bi bi-basket-fill me-2 text-success"></i> Food Market
+                    </button>
+                    <button id="btn-tech" class="list-group-item list-group-item-action category-btn" onclick="filterProducts('tech')">
+                        <i class="bi bi-laptop-fill me-2 text-primary"></i> Electronics
                     </button>
                 </div>
             </div>
         </div>
 
-        <!-- STORE 2 -->
-        <div class="col-md-4 mb-4">
-            <div class="card store-card">
-                <img src="https://images.unsplash.com/photo-1511707171634-5f897ff02aa9"
-                     class="card-img-top store-img">
+        <div class="col-md-9" id="contentContainer">
+            
+            <div id="backButtonTop" class="mb-3 d-none">
+                <button class="btn btn-dark" onclick="filterProducts('all')">
+                    <i class="bi bi-arrow-left-circle me-2"></i> Rudi Nyuma (Back)
+                </button>
+            </div>
 
-                <div class="card-body">
-                    <h5>Tech World</h5>
-
-                    <p>
-                        Electronics store selling smartphones,
-                        laptops and accessories.
-                    </p>
-
-                    <p>
-                        <strong>Mmiliki:</strong> Juma Hassan
-                    </p>
-
-                    <button class="btn btn-success w-100"
-                    onclick="showProducts('tech')">
-                    View Products
-                    </button>
+            <div class="row mb-4" id="searchBarRow">
+                <div class="col-12">
+                    <div class="input-group border border-warning rounded-pill overflow-hidden shadow-sm">
+                        <input type="text" class="form-control border-0 px-4 py-2" placeholder="Tafuta bidhaa unayotaka..." id="searchInput">
+                        <button class="btn btn-warning px-4" onclick="searchProduct()">
+                            <i class="bi bi-search"></i>
+                        </button>
+                    </div>
                 </div>
             </div>
-        </div>
 
-        <!-- STORE 3 -->
-        <div class="col-md-4 mb-4">
-            <div class="card store-card">
-                <img src="https://images.unsplash.com/photo-1542838132-92c53300491e"
-                     class="card-img-top store-img">
+            <div class="row g-3" id="allProducts"></div>
 
-                <div class="card-body">
-                    <h5>Fresh Market</h5>
-
-                    <p>
-                        Grocery shop providing fresh fruits,
-                        vegetables and food products.
-                    </p>
-
-                    <p>
-                        <strong>Mmiliki:</strong> Asha Said
-                    </p>
-
-                    <button class="btn btn-danger w-100"
-                    onclick="showProducts('market')">
-                    View Products
-                    </button>
-                </div>
+            <div id="backButtonBottom" class="mt-4 text-center d-none">
+                <button class="btn btn-dark px-4 py-2" onclick="filterProducts('all')">
+                    <i class="bi bi-arrow-left-circle me-2"></i> Rudi Nyuma kwenye Categories
+                </button>
             </div>
         </div>
-
     </div>
 
-    <!-- PRODUCTS SECTION -->
-    <div id="productsSection" class="mt-5">
 
-        <div class="d-flex justify-content-between align-items-center">
-            <h2 id="storeTitle"></h2>
-
-            <button class="btn btn-dark"
-            onclick="hideProducts()">
-            Back to Stores
+    <div class="row d-none bg-white p-4 rounded shadow-sm mx-1" id="productDetailPage">
+        
+        <div class="col-12 mb-4">
+            <button class="btn btn-light border" onclick="closeProductPage()">
+                <i class="bi text-dark bi-chevron-left me-2"></i> Back to Products
             </button>
         </div>
 
-        <div class="row mt-4" id="productContainer">
-
-        </div>
-    </div>
-
-</div>
-<footer class="bg-dark text-white mt-5 pt-5 pb-4">
-
-    <div class="container">
-
-        <div class="row">
-
-            <!-- About System -->
-            <div class="col-md-3 mb-4">
-
-                <h4>
-                    <i class="bi bi-shop"></i>
-                    Online Marketing
-                </h4>
-
-                <p>
-                    Mfumo wa kisasa unaowaunganisha wauzaji
-                    na wanunuzi kwa njia rahisi, salama na
-                    ya haraka kupitia mtandao.
-                </p>
-
-                <p>
-                    Tunalenga kuwasaidia wafanyabiashara
-                    kukuza biashara zao na kuwapatia
-                    wateja huduma bora.
-                </p>
-
-            </div>
-
-            <!-- Quick Links -->
-            <div class="col-md-3 mb-4">
-
-                <h4>
-                    <i class="bi bi-link-45deg"></i>
-                    Viungo Muhimu
-                </h4>
-
-                <ul class="list-unstyled">
-
-                    <li class="mb-2">
-                        <a href="#"
-                           class="text-white text-decoration-none">
-                            <i class="bi bi-house-door"></i>
-                            Home
-                        </a>
-                    </li>
-
-                    <li class="mb-2">
-                        <a href="#"
-                           class="text-white text-decoration-none">
-                            <i class="bi bi-person-plus"></i>
-                            Register
-                        </a>
-                    </li>
-
-                    <li class="mb-2">
-                        <a href="#"
-                           class="text-white text-decoration-none">
-                            <i class="bi bi-box-arrow-in-right"></i>
-                            Login
-                        </a>
-                    </li>
-
-                    <li>
-                        <a href="#"
-                           class="text-white text-decoration-none">
-                            <i class="bi bi-cart"></i>
-                            Products
-                        </a>
-                    </li>
-
-                </ul>
-
-            </div>
-
-            <!-- Services -->
-            <div class="col-md-3 mb-4">
-
-                <h4>
-                    <i class="bi bi-grid"></i>
-                    Huduma Zetu
-                </h4>
-
-                <ul class="list-unstyled">
-
-                    <li class="mb-2">
-                        <i class="bi bi-check-circle-fill text-success"></i>
-                        Uuzaji wa Bidhaa Mtandaoni
-                    </li>
-
-                    <li class="mb-2">
-                        <i class="bi bi-check-circle-fill text-success"></i>
-                        Usimamizi wa Maduka
-                    </li>
-
-                    <li class="mb-2">
-                        <i class="bi bi-check-circle-fill text-success"></i>
-                        Malipo Salama
-                    </li>
-
-                    <li>
-                        <i class="bi bi-check-circle-fill text-success"></i>
-                        Ufuatiliaji wa Oda
-                    </li>
-
-                </ul>
-
-            </div>
-
-            <!-- Contact -->
-            <div class="col-md-3 mb-4">
-
-                <h4>
-                    <i class="bi bi-headset"></i>
-                    Wasiliana Nasi
-                </h4>
-
-                <p>
-                    <i class="bi bi-telephone-fill"></i>
-                    +255 700 000 000
-                </p>
-
-                <p>
-                    <i class="bi bi-envelope-fill"></i>
-                    info@onlinemarketing.com
-                </p>
-
-                <p>
-                    <i class="bi bi-geo-alt-fill"></i>
-                    Dar es Salaam, Tanzania
-                </p>
-
-                <div class="mt-3 fs-4">
-
-                    <a href="#"
-                       class="text-white me-2">
-                        <i class="bi bi-facebook"></i>
-                    </a>
-
-                    <a href="#"
-                       class="text-white me-2">
-                        <i class="bi bi-instagram"></i>
-                    </a>
-
-                    <a href="#"
-                       class="text-white me-2">
-                        <i class="bi bi-twitter-x"></i>
-                    </a>
-
-                    <a href="#"
-                       class="text-white me-2">
-                        <i class="bi bi-whatsapp"></i>
-                    </a>
-
-                    <a href="#"
-                       class="text-white">
-                        <i class="bi bi-youtube"></i>
-                    </a>
-
+        <div class="col-md-5 mb-4">
+            <div class="row">
+                <div class="col-2 d-flex flex-column gap-2" id="detailThumbnails"></div>
+                <div class="col-10">
+                    <img id="detailMainImg" src="" class="detail-main-img border" alt="">
                 </div>
-
             </div>
-
         </div>
 
-        <hr class="border-light">
+        <div class="col-md-7">
+             <div class="card border-warning mb-4 bg-light">
+                <div class="card-body">
+                    <h5 class="fw-bold text-warning mb-3"><i class="bi bi-shop me-2"></i>Seller && store info</h5>
+                    <div class="row g-2 fs-6">
+                        <div class="col-sm-6"><strong><i class="bi bi-building text-primary me-2"></i>Duka/Store:</strong> <span id="detailStore"></span></div>
+                        <div class="col-sm-6"><strong><i class="bi bi-person-fill text-success me-2"></i>Mmiliki:</strong> <span id="detailOwner"></span></div>
+                        <div class="col-sm-6"><strong><i class="bi bi-geo-alt-fill text-danger me-2"></i>Location:</strong> <span id="detailLocation"></span></div>
+                    </div>
+                </div>
+            </div>
+            <span class="badge bg-secondary mb-2 text-uppercase" id="detailCategory">Mavazi</span>
+            <h2 class="fw-bold text-dark" id="detailName">Jina la Bidhaa</h2>
+            
+            <div class="my-3 p-3 bg-light rounded">
+                <span class="text-muted d-block fs-6">Price:</span>
+                <span class="price-tag" id="detailPrice">0 TSh</span>
+                <span class="badge bg-danger ms-2">Discounted Price of 11%</span>
+            </div>
 
-       
+            <hr>
 
-            <p style="text-align: center;">
-                © 2026 Online Marketing System.
-                All Rights Reserved.
-            </p>
+            <div class="mb-3">
+                <h6 class="fw-bold text-secondary">Color:</h6>
+                <div id="colorContainer">
+                    <span class="color-badge active">White</span>
+                    <span class="color-badge">Grey</span>
+                    <span class="color-badge">Pink</span>
+                    <span class="color-badge">Khaki</span>
+                    <span class="color-badge">Black</span>
+                </div>
+            </div>
+
+            <div class="mb-4 d-flex align-items-center gap-4">
+                <div>
+                    <h6 class="fw-bold text-secondary">Quantity:</h6>
+                    <div class="input-group" style="width: 130px;">
+                        <button class="btn btn-outline-secondary" onclick="changeQty(-1)">-</button>
+                        <input type="text" class="form-control text-center" value="1" id="orderQty" readonly>
+                        <button class="btn btn-outline-secondary" onclick="changeQty(1)">+</button>
+                    </div>
+                </div>
+                <div>
+                    <h6 class="fw-bold text-secondary">Zilizobaki (Stock):</h6>
+                    <span class="badge bg-danger rounded-pill fs-6 py-2 px-3" id="detailStock">0 Pcs</span>
+                </div>
+            </div>
+
+            <hr>
 
             
 
-       
+            <div class="d-grid mb-5">
+                <a href="signup.html" class="btn btn-success btn-lg fw-bold py-3">
+                    Nunua sasa
+                </a>
+            </div>
 
+        </div>
     </div>
 
+</div>
+
+<footer class="bg-dark text-white mt-5 pt-5 pb-4">
+    <div class="container text-center">
+        <p>© 2026 Online Marketing System. All Rights Reserved.</p>
+    </div>
 </footer>
 
 <script>
+    const productsData = [
+        { id: 1, name: "Viatu vya Kawaida", price: "TZS 25,000", category: "viatu", image: "images/viatu (1).jpeg", store: "Michenzani Shoes", owner: "Ali Kassim", location: "Michenzani, Zanzibar", stock: 15 },
+        { id: 2, name: "Viatu vya Michezo", price: "TZS 28,000", category: "viatu", image: "images/viatu (2).jpeg", store: "Sports Center", owner: "Khamis Juma", location: "Chumbuni", stock: 8 },
+        { id: 3, name: "Viatu vya Ofisini", price: "TZS 29,000", category: "viatu", image: "images/viatu (3).jpeg", store: "Executive Wear", owner: "Fatma Said", location: "Stone Town", stock: 12 },
+        { id: 4, name: "Viatu Classic", price: "TZS 40,000", category: "viatu", image: "images/viatu (4).jpeg", store: "Michenzani Shoes", owner: "Ali Kassim", location: "Michenzani", stock: 6 },
+        { id: 5, name: "Viatu Raba 1", price: "TZS 5,000", category: "viatu", image: "images/viatu (5).jpeg", store: "Kuu Street Boutique", owner: "Said Omar", location: "Darajani", stock: 30 },
+        { id: 6, name: "Viatu Puma", price: "TZS 16,000", category: "viatu", image: "images/viatu (6).jpeg", store: "Sports Center", owner: "Khamis Juma", location: "Chumbuni", stock: 20 },
+        { id: 7, name: "Viatu Raba 2", price: "TZS 5,000", category: "viatu", image: "images/viatu (7).jpeg", store: "Kuu Street Boutique", owner: "Said Omar", location: "Darajani", stock: 25 },
+        { id: 8, name: "Viatu Raba 3", price: "TZS 5,000", category: "viatu", image: "images/viatu (8).jpeg", store: "Kuu Street Boutique", owner: "Said Omar", location: "Darajani", stock: 14 },
+        { id: 9, name: "Viatu Raba 4", price: "TZS 5,000", category: "viatu", image: "images/viatu (9).jpeg", store: "Kuu Street Boutique", owner: "Said Omar", location: "Darajani", stock: 18 },
+        { id: 10, name: "Viatu Raba 5", price: "TZS 5,000", category: "viatu", image: "images/viatu (10).jpeg", store: "Kuu Street Boutique", owner: "Said Omar", location: "Darajani", stock: 40 },
+        { id: 11, name: "Viatu Raba 6", price: "TZS 5,000", category: "viatu", image: "images/viatu (11).jpeg", store: "Kuu Street Boutique", owner: "Said Omar", location: "Darajani", stock: 11 },
+        { id: 12, name: "Viatu Raba 7", price: "TZS 5,000", category: "viatu", image: "images/viatu (12).jpeg", store: "Kuu Street Boutique", owner: "Said Omar", location: "Darajani", stock: 9 },
+        { id: 13, name: "Viatu Raba 8", price: "TZS 5,000", category: "viatu", image: "images/viatu (13).jpeg", store: "Kuu Street Boutique", owner: "Said Omar", location: "Darajani", stock: 15 },
+        { id: 14, name: "Viatu Raba 9", price: "TZS 5,000", category: "viatu", image: "images/viatu (14).jpeg", store: "Kuu Street Boutique", owner: "Said Omar", location: "Darajani", stock: 22 },
+        { id: 15, name: "Viatu Raba 10", price: "TZS 5,000", category: "viatu", image: "images/viatu (15).jpeg", store: "Kuu Street Boutique", owner: "Said Omar", location: "Darajani", stock: 31 },
+        { id: 16, name: "Viatu Raba 11", price: "TZS 5,000", category: "viatu", image: "images/viatu (16).jpeg", store: "Kuu Street Boutique", owner: "Said Omar", location: "Darajani", stock: 17 },
+        { id: 17, name: "Viatu Raba 12", price: "TZS 5,000", category: "viatu", image: "images/viatu (17).jpeg", store: "Kuu Street Boutique", owner: "Said Omar", location: "Darajani", stock: 5 },
+        { id: 18, name: "Viatu Raba 13", price: "TZS 5,000", category: "viatu", image: "images/viatu (18).jpeg", store: "Kuu Street Boutique", owner: "Said Omar", location: "Darajani", stock: 8 },
+        { id: 19, name: "Viatu Raba 14", price: "TZS 5,000", category: "viatu", image: "images/viatu (19).jpeg", store: "Kuu Street Boutique", owner: "Said Omar", location: "Darajani", stock: 19 },
+        { id: 20, name: "Viatu Raba 15", price: "TZS 5,000", category: "viatu", image: "images/viatu (20).jpeg", store: "Kuu Street Boutique", owner: "Said Omar", location: "Darajani", stock: 12 },
+        { id: 21, name: "Viatu Raba 16", price: "TZS 5,000", category: "viatu", image: "images/viatu (21).jpeg", store: "Kuu Street Boutique", owner: "Said Omar", location: "Darajani", stock: 26 },
+        { id: 22, name: "Viatu Raba 17", price: "TZS 5,000", category: "viatu", image: "images/viatu (22).jpeg", store: "Kuu Street Boutique", owner: "Said Omar", location: "Darajani", stock: 14 },
+        { id: 23, name: "Viatu Raba 18", price: "TZS 5,000", category: "viatu", image: "images/viatu (23).jpeg", store: "Kuu Street Boutique", owner: "Said Omar", location: "Darajani", stock: 3 },
+        { id: 24, name: "Viatu Raba 19", price: "TZS 5,000", category: "viatu", image: "images/viatu (24).jpeg", store: "Kuu Street Boutique", owner: "Said Omar", location: "Darajani", stock: 7 },
+        { id: 25, name: "Viatu Raba 20", price: "TZS 5,000", category: "viatu", image: "images/viatu (25).jpeg", store: "Kuu Street Boutique", owner: "Said Omar", location: "Darajani", stock: 33 },
+        { id: 26, name: "Viatu Raba 21", price: "TZS 5,000", category: "viatu", image: "images/viatu (26).jpeg", store: "Kuu Street Boutique", owner: "Said Omar", location: "Darajani", stock: 16 },
+        { id: 27, name: "Viatu Raba 22", price: "TZS 5,000", category: "viatu", image: "images/viatu (27).jpeg", store: "Kuu Street Boutique", owner: "Said Omar", location: "Darajani", stock: 20 },
+        { id: 28, name: "Viatu Raba 23", price: "TZS 5,000", category: "viatu", image: "images/viatu (28).jpeg", store: "Kuu Street Boutique", owner: "Said Omar", location: "Darajani", stock: 29 },
+        { id: 29, name: "Viatu Raba 24", price: "TZS 5,000", category: "viatu", image: "images/viatu (29).jpeg", store: "Kuu Street Boutique", owner: "Said Omar", location: "Darajani", stock: 11 },
+        { id: 30, name: "Viatu Raba 25", price: "TZS 5,000", category: "viatu", image: "images/viatu (30).jpeg", store: "Kuu Street Boutique", owner: "Said Omar", location: "Darajani", stock: 10 },
+        { id: 31, name: "Viatu Raba 26", price: "TZS 5,000", category: "viatu", image: "images/viatu (31).jpeg", store: "Kuu Street Boutique", owner: "Said Omar", location: "Darajani", stock: 14 },
+        { id: 32, name: "Viatu Raba 27", price: "TZS 5,000", category: "viatu", image: "images/viatu (32).jpeg", store: "Kuu Street Boutique", owner: "Said Omar", location: "Darajani", stock: 4 },
+        
+        { id: 33, name: "Mkoba Elegant Mkuu", price: "TZS 45,000", category: "mkoba", image: "images/mkoba.jpeg", store: "Zanzibar Handbags", owner: "Asha Bakari", location: "Forodhani", stock: 5 },
+        { id: 34, name: "Mkoba Elegant 1", price: "TZS 45,000", category: "mkoba", image: "images/mkoba (1).jpeg", store: "Zanzibar Handbags", owner: "Asha Bakari", location: "Forodhani", stock: 8 },
+        { id: 35, name: "Mkoba Elegant 2", price: "TZS 45,000", category: "mkoba", image: "images/mkoba (2).jpeg", store: "Lady Fashion Store", owner: "Mariam Abdi", location: "Mwanakwerekwe", stock: 12 },
+        { id: 36, name: "Mkoba Elegant 3", price: "TZS 45,000", category: "mkoba", image: "images/mkoba (3).jpeg", store: "Lady Fashion Store", owner: "Mariam Abdi", location: "Mwanakwerekwe", stock: 6 },
+        { id: 37, name: "Mkoba Elegant 4", price: "TZS 45,000", category: "mkoba", image: "images/mkoba (4).jpeg", store: "Zanzibar Handbags", owner: "Asha Bakari", location: "Forodhani", stock: 2 },
+        { id: 38, name: "Mkoba Elegant 5", price: "TZS 45,000", category: "mkoba", image: "images/mkoba (5).jpeg", store: "Lady Fashion Store", owner: "Mariam Abdi", location: "Mwanakwerekwe", stock: 9 },
+        { id: 39, name: "Mkoba Elegant 6", price: "TZS 45,000", category: "mkoba", image: "images/mkoba (6).jpeg", store: "Zanzibar Handbags", owner: "Asha Bakari", location: "Forodhani", stock: 11 },
+        { id: 40, name: "Mkoba Elegant 7", price: "TZS 45,000", category: "mkoba", image: "images/mkoba (7).jpeg", store: "Zanzibar Handbags", owner: "Asha Bakari", location: "Forodhani", stock: 14 },
+        { id: 41, name: "Mkoba Elegant 8", price: "TZS 45,000", category: "mkoba", image: "images/mkoba (8).jpeg", store: "Lady Fashion Store", owner: "Mariam Abdi", location: "Mwanakwerekwe", stock: 7 },
+        { id: 42, name: "Mkoba Elegant 9", price: "TZS 45,000", category: "mkoba", image: "images/mkoba (9).jpeg", store: "Lady Fashion Store", owner: "Mariam Abdi", location: "Mwanakwerekwe", stock: 3 },
+        { id: 43, name: "Mkoba Elegant 10", price: "TZS 45,000", category: "mkoba", image: "images/mkoba (10).jpeg", store: "Zanzibar Handbags", owner: "Asha Bakari", location: "Forodhani", stock: 19 },
+        
+        { id: 44, name: "Saa ya mkononi Rolex 1", price: "TZS 60,000", category: "saa", image: "images/saa (1).jpeg", store: "Timepiece TZ", owner: "Iddi Nassor", location: "Stone Town", stock: 4 },
+        { id: 45, name: "Saa ya mkononi Rolex 2", price: "TZS 60,000", category: "saa", image: "images/saa (2).jpeg", store: "Timepiece TZ", owner: "Iddi Nassor", location: "Stone Town", stock: 8 },
+        { id: 46, name: "Saa ya mkononi Rolex 3", price: "TZS 60,000", category: "saa", image: "images/saa (3).jpeg", store: "Smart Premium Watch", owner: "Zubeir Ali", location: "Darajani", stock: 11 },
+        { id: 47, name: "Saa ya mkononi Rolex 4", price: "TZS 60,000", category: "saa", image: "images/saa (4).jpeg", store: "Smart Premium Watch", owner: "Zubeir Ali", location: "Darajani", stock: 5 },
+        { id: 48, name: "Saa ya mkononi Rolex 5", price: "TZS 60,000", category: "saa", image: "images/saa (5).jpeg", store: "Timepiece TZ", owner: "Iddi Nassor", location: "Stone Town", stock: 2 },
+        { id: 49, name: "Saa ya mkononi Rolex 6", price: "TZS 60,000", category: "saa", image: "images/saa (6).jpeg", store: "Timepiece TZ", owner: "Iddi Nassor", location: "Stone Town", stock: 6 },
+        { id: 50, name: "Saa ya mkononi Rolex 7", price: "TZS 60,000", category: "saa", image: "images/saa (7).jpeg", store: "Smart Premium Watch", owner: "Zubeir Ali", location: "Darajani", stock: 13 },
+        { id: 51, name: "Saa ya mkononi Rolex 8", price: "TZS 60,000", category: "saa", image: "images/saa (8).jpeg", store: "Smart Premium Watch", owner: "Zubeir Ali", location: "Darajani", stock: 9 },
+        { id: 52, name: "Saa ya mkononi Rolex 9", price: "TZS 60,000", category: "saa", image: "images/saa (9).jpeg", store: "Timepiece TZ", owner: "Iddi Nassor", location: "Stone Town", stock: 1 },
+        { id: 53, name: "Saa ya mkononi Rolex 10", price: "TZS 60,000", category: "saa", image: "images/saa (10).jpeg", store: "Timepiece TZ", owner: "Iddi Nassor", location: "Stone Town", stock: 7 },
 
-const products = {
+        { id: 54, name: "Suti Bomba ya Harusi 1", price: "TZS 1,500,000", category: "suti", image: "images/suti.jpeg", store: "Gentlemen Choice", owner: "Salum Abdallah", location: "Mazizini", stock: 3 },
+        { id: 55, name: "Suti Bomba ya Harusi 2", price: "TZS 1,500,000", category: "suti", image: "images/suti (1).jpeg", store: "Gentlemen Choice", owner: "Salum Abdallah", location: "Mazizini", stock: 2 },
+        { id: 56, name: "Suti Bomba ya Harusi 3", price: "TZS 1,500,000", category: "suti", image: "images/suti (2).jpeg", store: "Executive Wear", owner: "Fatma Said", location: "Stone Town", stock: 4 },
+        { id: 57, name: "Suti Bomba ya Harusi 4", price: "TZS 1,500,000", category: "suti", image: "images/suti (3).jpeg", store: "Executive Wear", owner: "Fatma Said", location: "Stone Town", stock: 5 },
+        { id: 58, name: "Suti Bomba ya Harusi 5", price: "TZS 1,500,000", category: "suti", image: "images/suti (4).jpeg", store: "Gentlemen Choice", owner: "Salum Abdallah", location: "Mazizini", stock: 1 },
+        { id: 59, name: "Suti Bomba ya Harusi 6", price: "TZS 1,500,000", category: "suti", image: "images/suti (5).jpeg", store: "Gentlemen Choice", owner: "Salum Abdallah", location: "Mazizini", stock: 2 },
+        { id: 60, name: "Suti Bomba ya Harusi 7", price: "TZS 1,500,000", category: "suti", image: "images/suti (6).jpeg", store: "Executive Wear", owner: "Fatma Said", location: "Stone Town", stock: 3 },
+        
+        { id: 61, name: "T-SHIRT Kali", price: "TZS 20,000", category: "shati", image: "images/t-shirt.jpeg", store: "Kuu Street Boutique", owner: "Said Omar", location: "Darajani", stock: 50 },
+        { id: 62, name: "Suruali ya Jeans", price: "TZS 150,000", category: "suruali", image: "images/suruali.jpeg", store: "Executive Wear", owner: "Fatma Said", location: "Stone Town", stock: 25 },
+        { id: 63, name: "Nguo za watoto", price: "TZS 5,000", category: "nguo", image: "images/nguo.jpeg", store: "Kids Fashion", owner: "Zuwena Ally", location: "Mlandege", stock: 60 },
+        { id: 64, name: "Organic Tomatoes", price: "TZS 3,000", category: "market", image: "https://images.unsplash.com/photo-1546094096-0df4bcaaa337", store: "Zanzibar Fresh Market", owner: "Mwita Daudi", location: "Mwanakwerekwe", stock: 100 },
+        { id: 65, name: "Sweet Bananas", price: "TZS 4,000", category: "market", image: "https://images.unsplash.com/photo-1574226516831-e1dff420e37f", store: "Zanzibar Fresh Market", owner: "Mwita Daudi", location: "Mwanakwerekwe", stock: 150 },
+        { id: 66, name: "Smart Watch", price: "TZS 85,000", category: "tech", image: "https://images.unsplash.com/photo-1523275335684-37898b6baf30", store: "Timepiece TZ", owner: "Iddi Nassor", location: "Stone Town", stock: 15 }
+    ];
 
-fashion : [
+    let currentCategory = 'all';
+    let activeProduct = null;
 
-{
-name:"Men Shirt",
-price:"TZS 25,000",
-image:"https://images.unsplash.com/photo-1602810318383-e386cc2a3ccf"
-},
+    function displayProducts(products) {
+        let container = document.getElementById("allProducts");
+        let sidebar = document.getElementById("sidebarContainer");
+        let contentArea = document.getElementById("contentContainer");
+        let backBtnTop = document.getElementById("backButtonTop");
+        let backBtnBottom = document.getElementById("backButtonBottom");
+        let searchBarRow = document.getElementById("searchBarRow");
 
-{
-name:"Ladies Dress",
-price:"TZS 45,000",
-image:"https://images.unsplash.com/photo-1496747611176-843222e1e57c"
-},
+        container.innerHTML = "";
 
-{
-name:"Sneakers",
-price:"TZS 60,000",
-image:"https://images.unsplash.com/photo-1542291026-7eec264c27ff"
-}
+        if(products.length === 0) {
+            container.innerHTML = `<div class="col-12 text-center p-5"><h5>Samahani! Bidhaa haijapatikana.</h5></div>`;
+            return;
+        }
 
-],
+        let productsToRender = products;
 
-tech : [
+        if (currentCategory === 'all') {
+            sidebar.classList.remove("d-none");
+            contentArea.className = "col-md-9"; 
+            backBtnTop.classList.add("d-none");
+            backBtnBottom.classList.add("d-none");
+            searchBarRow.classList.remove("d-none");
 
-{
-name:"iPhone",
-price:"TZS 1,500,000",
-image:"https://images.unsplash.com/photo-1511707171634-5f897ff02aa9"
-},
+            container.className = "row row-cols-2 row-cols-sm-3 row-cols-lg-5 g-3";
 
-{
-name:"Laptop",
-price:"TZS 2,000,000",
-image:"https://images.unsplash.com/photo-1496181133206-80ce9b88a853"
-},
+            const uniqueCategories = [];
+            productsToRender = products.filter(product => {
+                if (!uniqueCategories.includes(product.category)) {
+                    uniqueCategories.push(product.category);
+                    return true;
+                }
+                return false;
+            });
+        } else {
+            sidebar.classList.add("d-none");
+            contentArea.className = "col-md-12"; 
+            backBtnTop.classList.remove("d-none");
+            backBtnBottom.classList.remove("d-none");
+            searchBarRow.classList.add("d-none");
 
-{
-name:"Headphones",
-price:"TZS 150,000",
-image:"https://images.unsplash.com/photo-1505740420928-5e560c06d30e"
-}
+            container.className = "row row-cols-2 row-cols-sm-3 row-cols-md-4 row-cols-lg-6 g-3";
+        }
 
-],
+        productsToRender.forEach(product => {
+            let buttonText = (currentCategory === 'all') ? 'Angalia Zaidi' : 'Fungua bidhaa';
+            let buttonClass = (currentCategory === 'all') ? 'btn-outline-warning' : 'btn-warning text-dark fw-bold';
+            
+            let clickAction = (currentCategory === 'all') 
+                ? `filterProducts('${product.category}')` 
+                : `openProductPage(${product.id})`;
 
-market : [
+            container.innerHTML += `
+                <div class="col">
+                    <div class="card product-card shadow-sm h-100" onclick="${clickAction}">
+                        <img src="${product.image}" class="product-img" alt="${product.name}">
+                        <div class="card-body d-flex flex-column justify-content-between">
+                            <div>
+                                <h6 class="product-title">${product.name}</h6>
+                                <p class="price mb-2">${product.price}</p>
+                            </div>
+                            <button class="btn ${buttonClass} btn-sm w-100 mt-2" onclick="event.stopPropagation(); ${clickAction}">${buttonText}</button>
+                        </div>
+                    </div>
+                </div>
+            `;
+        });
+    }
 
-{
-name:"Fresh Apples",
-price:"TZS 5,000",
-image:"https://images.unsplash.com/photo-1567306226416-28f0efdc88ce"
-},
+    function openProductPage(productId) {
+        const product = productsData.find(p => p.id === productId);
+        if(!product) return;
+        activeProduct = product;
 
-{
-name:"Tomatoes",
-price:"TZS 3,000",
-image:"https://images.unsplash.com/photo-1546094096-0df4bcaaa337"
-},
+        document.getElementById("mainShopSection").classList.add("d-none");
+        document.getElementById("heroSection").classList.add("d-none");
+        document.getElementById("productDetailPage").classList.remove("d-none");
 
-{
-name:"Bananas",
-price:"TZS 4,000",
-image:"https://images.unsplash.com/photo-1574226516831-e1dff420e37f"
-}
+        document.getElementById("detailCategory").innerText = product.category;
+        document.getElementById("detailName").innerText = product.name;
+        document.getElementById("detailPrice").innerText = product.price;
+        document.getElementById("detailMainImg").src = product.image;
+        document.getElementById("detailStore").innerText = product.store;
+        document.getElementById("detailOwner").innerText = product.owner;
+        document.getElementById("detailLocation").innerText = product.location;
+        document.getElementById("detailStock").innerText = product.stock + " Pcs";
+        document.getElementById("orderQty").value = 1; 
 
-]
+       
+        let thumbsContainer = document.getElementById("detailThumbnails");
+        thumbsContainer.innerHTML = `
+            <img src="${product.image}" class="detail-thumb-img active" onclick="changeDetailImage(this)">
+            <img src="${product.image}" class="detail-thumb-img" onclick="changeDetailImage(this)" style="filter: brightness(90%) contrast(110%);">
+            <img src="${product.image}" class="detail-thumb-img" onclick="changeDetailImage(this)" style="filter: saturate(130%);">
+        `;
 
-};
+        updateWhatsappLink();
+        window.scrollTo(0, 0);
+    }
 
-function showProducts(store){
+    function closeProductPage() {
+        document.getElementById("productDetailPage").classList.add("d-none");
+        document.getElementById("mainShopSection").classList.remove("d-none");
+        document.getElementById("heroSection").classList.remove("d-none");
+    }
 
-document.getElementById("productsSection").style.display="block";
+    function changeDetailImage(element) {
+        document.querySelectorAll('.detail-thumb-img').forEach(el => el.classList.remove('active'));
+        element.classList.add('active');
+        document.getElementById("detailMainImg").src = element.src;
+    }
 
-let container =
-document.getElementById("productContainer");
+    function changeQty(amount) {
+        let qtyInput = document.getElementById("orderQty");
+        let currentQty = parseInt(qtyInput.value) + amount;
+        if(currentQty >= 1 && currentQty <= activeProduct.stock) {
+            qtyInput.value = currentQty;
+            updateWhatsappLink();
+        }
+    }
 
-container.innerHTML="";
+    function updateWhatsappLink() {
+        if(!activeProduct) return;
+        let qty = document.getElementById("orderQty").value;
+        let selectedSize = document.querySelector('.size-badge.active')?.innerText || 'S';
+        let selectedColor = document.querySelector('.color-badge.active')?.innerText || 'Default';
 
-document.getElementById("storeTitle").innerHTML =
-store.toUpperCase() + " STORE PRODUCTS";
+        let whatsappMessage = `Habari, nahitaji kuagiza hii kutoka mfumo wako:\n\n*Bidhaa:* ${activeProduct.name}\n*Bei:* ${activeProduct.price}\n*Rangi:* ${selectedColor}\n*Size:* ${selectedSize}\n*Idadi:* ${qty} Pcs\n*Duka:* ${activeProduct.store}\n*Location:* ${activeProduct.location}`;
+        document.getElementById("detailWhatsappBtn").href = `https://wa.me/255777000000?text=${encodeURIComponent(whatsappMessage)}`;
+    }
 
-products[store].forEach(product=>{
+    function filterProducts(category) {
+        currentCategory = category;
+        closeProductPage(); 
 
-container.innerHTML += `
-<div class="col-md-4 mb-4">
-    <div class="card product-card shadow">
-        <img src="${product.image}" class="card-img-top">
+        let btns = document.querySelectorAll('.category-btn');
+        btns.forEach(btn => btn.classList.remove('active'));
+        
+        let activeBtn = document.getElementById(`btn-${category}`);
+        if(activeBtn) {
+            activeBtn.classList.add('active');
+        }
 
-        <div class="card-body">
-            <h5>${product.name}</h5>
-            <p class="text-success fw-bold">
-                ${product.price}
-            </p>
+        if (category === 'all') {
+            displayProducts(productsData);
+        } else {
+            const filtered = productsData.filter(p => p.category === category);
+            displayProducts(filtered);
+        }
+    }
 
-            <button class="btn btn-primary w-100">
-                Buy now
-            </button>
-        </div>
-    </div>
-</div>
-`;
-});
+    function searchProduct() {
+        let keyword = document.getElementById("searchInput").value.toLowerCase();
+        currentCategory = 'search_mode'; 
+        let results = productsData.filter(p => p.name.toLowerCase().includes(keyword));
+        displayProducts(results);
+    }
 
-window.scrollTo({
-top:700,
-behavior:'smooth'
-});
+    document.addEventListener('click', function(e) {
+        if(e.target.classList.contains('size-badge')) {
+            document.querySelectorAll('.size-badge').forEach(b => b.classList.remove('active'));
+            e.target.classList.add('active');
+            updateWhatsappLink();
+        }
+        if(e.target.classList.contains('color-badge')) {
+            document.querySelectorAll('.color-badge').forEach(b => b.classList.remove('active'));
+            e.target.classList.add('active');
+            updateWhatsappLink();
+        }
+    });
 
-}
-
-function hideProducts(){
-
-document.getElementById("productsSection").style.display="none";
-
-window.scrollTo({
-top:0,
-behavior:'smooth'
-});
-
-}
-
+    displayProducts(productsData);
 </script>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-
 </body>
 </html>
